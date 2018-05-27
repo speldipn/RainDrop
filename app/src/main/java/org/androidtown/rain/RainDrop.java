@@ -22,7 +22,7 @@ public class RainDrop extends Thread {
   public Paint paint = new Paint();
 
   public RainDrop(int cx, int cy) {
-    Random random = new Random();
+    Random random = new Random(System.currentTimeMillis());
     this.cx = cx;
     this.cy = cy;
     this.x = random.nextInt(cx);

@@ -25,7 +25,7 @@ public class Stage extends View {
   public Stage(Context context, int cx, int cy) {
     super(context);
     rainDrops = new ArrayList<>();
-    random = new Random();
+    random = new Random(System.currentTimeMillis());
     paints[0].setColor(Color.RED);
     paints[1].setColor(Color.BLUE);
     paints[2].setColor(Color.GREEN);
