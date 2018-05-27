@@ -8,21 +8,28 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Stage extends View {
 
   private final int RAINDROPS_MAX = 20;
   private boolean isStart = false;
   List<RainDrop> rainDrops;
+  Random random;
+  private boolean clickedStop = false;
 
-  // 물방울 색
-  Paint paint;
+  Paint[] paints = new Paint[]{
+    new Paint(), new Paint(), new Paint(), new Paint(),
+  };
 
   public Stage(Context context, int cx, int cy) {
     super(context);
     rainDrops = new ArrayList<>();
-    paint = new Paint();
-    paint.setColor(Color.BLUE);
+    random = new Random();
+    paints[0].setColor(Color.RED);
+    paints[1].setColor(Color.BLUE);
+    paints[2].setColor(Color.GREEN);
+    paints[3].setColor(Color.MAGENTA);
     for (int i = 0; i < RAINDROPS_MAX; ++i) {
       RainDrop rainDrop = new RainDrop(cx, cy);
       rainDrop.start();
@@ -33,7 +40,7 @@ public class Stage extends View {
   @Override
   protected void onDraw(Canvas canvas) {
     super.onDraw(canvas);
-    if(isStart) {
+    if (isStart) {
       drawStage(canvas);
     }
   }
@@ -41,17 +48,21 @@ public class Stage extends View {
   private void drawStage(Canvas canvas) {
     for (int i = 0; i < rainDrops.size(); ++i) {
       RainDrop rainDrop = rainDrops.get(i);
-      canvas.drawCircle(rainDrop.getX(), rainDrop.getY(), rainDrop.getRadius(), paint);
+      if(!clickedStop) {
+        rainDrop.paint = paints[random.nextInt(4)];
+      }
+      canvas.drawCircle(rainDrop.getX(), rainDrop.getY(), rainDrop.getRadius(), rainDrop.paint);
     }
     invalidate();
   }
 
   public void start() {
-    if(!isStart)isStart = true;
+    if (!isStart) isStart = true;
     for (int i = 0; i < RAINDROPS_MAX; ++i) {
       RainDrop rainDrop = rainDrops.get(i);
       rainDrop.doRun(true);
     }
+    clickedStop = false;
     invalidate();
   }
 
@@ -60,5 +71,6 @@ public class Stage extends View {
       RainDrop rainDrop = rainDrops.get(i);
       rainDrop.doRun(false);
     }
+    clickedStop = true;
   }
 }

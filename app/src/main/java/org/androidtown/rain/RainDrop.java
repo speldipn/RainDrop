@@ -1,5 +1,7 @@
 package org.androidtown.rain;
 
+import android.graphics.Paint;
+
 import java.util.Random;
 
 public class RainDrop extends Thread {
@@ -16,6 +18,8 @@ public class RainDrop extends Thread {
   private int cx;
   private int cy;
   private boolean isStop;
+
+  public Paint paint = new Paint();
 
   public RainDrop(int cx, int cy) {
     Random random = new Random();
