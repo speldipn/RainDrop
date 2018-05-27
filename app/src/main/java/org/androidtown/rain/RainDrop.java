@@ -20,17 +20,19 @@ public class RainDrop extends Thread {
   private boolean isStop;
 
   public Paint paint = new Paint();
+  Random random = null;
 
   public RainDrop(int cx, int cy) {
-    Random random = new Random(System.currentTimeMillis());
+    random = new Random(System.currentTimeMillis());
     this.cx = cx;
     this.cy = cy;
-    this.x = random.nextInt(cx);
-    this.y = 0;
-    this.radius = RADIUS_MIN + (random.nextFloat() * RADIUS_MAX); // 0.x ~ 9.x
-    this.speed = random.nextInt(SPEED_MAX) + SPEED_MIN;
+    setX(cx);
+    setY(cy);
+    setRadius();
+    setSpeed();
     this.isStop = true;
   }
+
 
   @Override
   public void run() {
@@ -39,7 +41,7 @@ public class RainDrop extends Thread {
         y += speed;
         sleep(100);
         if (this.y > cy) {
-          y = 0;
+          reInit();
         }
       }
       sleep(50);
@@ -58,12 +60,42 @@ public class RainDrop extends Thread {
     return radius;
   }
 
+  private void setRadius() {
+    this.radius = RADIUS_MIN + (random.nextFloat() * RADIUS_MAX); // 0.x ~ 9.x
+  }
+
+  private void setSpeed() {
+    this.speed = random.nextInt(SPEED_MAX) + SPEED_MIN;
+  }
+
+
   public int getY() {
     return y;
   }
 
+  private void setY(int cy) {
+    this.y = 0;
+  }
+
   public int getX() {
     return x;
+  }
+
+  private void setX(int cx) {
+    x = random.nextInt(cx);
+    if (x < (int)radius) {
+      x += (int) radius;
+    } else if ((x + (int)radius) >= cx) {
+      x -= (int) radius;
+    }
+    // TODO radius처리가 x설정보다 우선시 되어야 제대로 동작함.
+  }
+
+  private void reInit() {
+    setRadius();
+    setSpeed();
+    setX(cx);
+    setY(cy);
   }
 
   public void doRun(boolean isRun) {

@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class Stage extends View {
 
-  private final int RAINDROPS_MAX = 20;
+  private final int RAINDROPS_MAX = 50;
   private boolean isStart = false;
   List<RainDrop> rainDrops;
   Random random;
