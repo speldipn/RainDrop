@@ -62,8 +62,8 @@ public class RainDrop extends Thread {
     return x;
   }
 
-  public void doRun(boolean b) {
-    if (b) {
+  public void doRun(boolean isRun) {
+    if (isRun) {
       isStop = false;
     } else {
       isStop = true;
