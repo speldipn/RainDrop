@@ -39,12 +39,13 @@ public class RainDrop extends Thread {
     while (true) {
       if (!isStop) {
         y += speed;
-        sleep(100);
+        sleep(20);
         if (this.y > cy) {
           reInit();
         }
+      } else {
+        sleep(50);
       }
-      sleep(50);
     }
   }
 
