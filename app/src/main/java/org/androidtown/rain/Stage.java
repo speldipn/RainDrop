@@ -39,7 +39,6 @@ public class Stage extends View {
 
   @Override
   protected void onDraw(Canvas canvas) {
-    super.onDraw(canvas);
     if (isStart) {
       drawStage(canvas);
     }
